@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link"; // Correct import for navigation
+import Link from "next/link";
 import { getUserById } from "@/lib/users";
 
-export default async function UserDetailPage({
-  params,
-}: {
+type PageProps = {
   params: { id: string };
-}) {
+};
+
+export default async function UserDetailPage({ params }: PageProps) {
+  // Ensure getUserById can handle async behavior properly
   const user = await getUserById(params.id);
 
   if (!user) {
@@ -34,8 +35,9 @@ export default async function UserDetailPage({
               <span className="font-semibold">ID:</span> {user.id}
             </p>
             <div className="mt-6">
-              <Link href="/users">
+              <Link href="/users" passHref>
                 <Button
+                  //   as="a"
                   variant="link"
                   className="text-blue-600 hover:underline"
                 >
