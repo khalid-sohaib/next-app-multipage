@@ -7,7 +7,7 @@ let users: User[] = [
 
 // Fetch all users
 export const getUsers = (): User[] => {
-  return users;
+  return users; // 'users' is your in-memory array
 };
 
 // Fetch user by ID
