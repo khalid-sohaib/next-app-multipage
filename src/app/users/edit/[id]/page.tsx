@@ -1,12 +1,13 @@
-import { useRouter } from "next/router";
 import { getUserById } from "@/lib/users";
 import UserForm from "@/components/UserForm";
 import Link from "next/link";
 
-export default function EditUserPage() {
-  const router = useRouter();
-  const { id } = router.query; // Get user ID from the URL
-  const user = getUserById(id as string); // Fetch the user by ID
+interface EditUserPageProps {
+  params: { id: string }; // Params provided by Next.js for dynamic routes
+}
+
+export default async function EditUserPage({ params }: EditUserPageProps) {
+  const user = await getUserById(params.id); // Fetch the user by ID
 
   if (!user) {
     return (
