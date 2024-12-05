@@ -1,13 +1,19 @@
-import { getUserById } from "@/lib/users";
+import { getUserById, getUsers } from "@/lib/users";
 import UserForm from "@/components/UserForm";
 import Link from "next/link";
 
-interface EditUserPageProps {
-  params: { id: string }; // Params provided by Next.js for dynamic routes
+// Generate static params for all users
+export async function generateStaticParams() {
+  const users = getUsers(); // Fetch all users
+  return users.map((user) => ({ id: user.id }));
 }
 
-export default async function EditUserPage({ params }: EditUserPageProps) {
-  const user = await getUserById(params.id); // Fetch the user by ID
+export default async function EditUserPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const user = getUserById(params.id); // Fetch the user by ID
 
   if (!user) {
     return (
@@ -21,7 +27,7 @@ export default async function EditUserPage({ params }: EditUserPageProps) {
   return (
     <div>
       <h1>Edit User</h1>
-      <UserForm user={user} /> {/* This will render the form to edit a user */}
+      <UserForm user={user} />
     </div>
   );
 }
